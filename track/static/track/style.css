@@ -1,0 +1,38 @@
+html, body, #wrapper
+{
+	width: 100%;
+}
+.div_header 
+{ 
+	background-color:#446CB3; 
+	color:white;
+	padding:10px;	
+}
+.table_div
+{
+	background-color:#E4F1FE;
+}
+.param_title
+{
+}
+
+.param_value
+{
+}
+
+.form_table
+{
+	padding:10px;
+}
+
+.submit_td
+{
+	text-align:center;
+}
+
+.datetime_div
+{
+	background-color:#ECECEC;
+	font-size:small;
+	padding:5px;
+}

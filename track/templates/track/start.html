@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Weight tracker</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'track/style.css' %}?{% now "U" %}" />
+	</head>
+	<body width="100px">
+		<div class="div_header">
+		{% if latest_measure %}
+		    	Last measure:<br> {{ latest_measure.check_date|date:"d.m.Y" }}: {{ latest_measure.weight_value }}
+		{% else %}
+		    <p>No measures made yet.</p>
+		{% endif %}
+		</div>
+		<div class="table_div">
+			<form action="{% url 'track:save' %}" method="post">
+				{% csrf_token %}
+				<table class="form_table">
+					<tr>
+						<td class="param_title">Date</td>
+						<td class="param_value"><input name="date" value="{% now "d.m.Y" %}"></input></td>
+					</tr>
+					<tr>
+						<td class="param_title">Weight</td>
+						<td class="param_value"><input name="value" value="{{ latest_measure.weight_value }}"></input></td>
+					</tr>
+					<tr>
+						<td class="submit_td" colspan=2>
+							<input type="submit" value="Save" />
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="minimax_div">
+			<table cellpadding="10px">
+				<tr>
+					<td style="background-color:#C8F7C5;">min {{ absolute_min.weight_value__min }}</td>
+					<td style="background-color:#C5EFF7;">avg {{ average.weight_value__avg|floatformat:1 }}</td>
+					<td style="background-color:#FDE3A7;">max {{ absolute_max.weight_value__max }}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="history_div">
+			<table>
+			{% for measure in history %}
+				<tr><td>
+					{{ measure.check_date|date:"d.m.Y"}} : {{ measure.weight_value }}
+				</td></tr>
+			{% endfor %}
+			</table>
+		</div>
+		<div class="datetime_div">
+			Server time: {% now "d.m.Y H:i" %}
+		</div>
+	</body>	
+</html>
